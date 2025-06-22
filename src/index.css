@@ -8,7 +8,7 @@
   --color-palette-5: #a0dd98;
 }
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Global styles for theme transitions */
 * {
