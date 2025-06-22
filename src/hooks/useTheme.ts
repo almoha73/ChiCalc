@@ -31,8 +31,10 @@ export const useTheme = () => {
     // Initial update
     updateResolvedTheme();
     
-    // Listen for system theme changes
-    mediaQuery.addEventListener('change', updateResolvedTheme);
+    // Listen for system theme changes only when in system mode
+    if (theme === 'system') {
+      mediaQuery.addEventListener('change', updateResolvedTheme);
+    }
     
     // Save to localStorage
     localStorage.setItem('calculator-theme', theme);

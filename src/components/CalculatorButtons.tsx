@@ -7,7 +7,7 @@ interface CalculatorButtonsProps {
 }
 
 const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   
   const buttons = [
     ['C', '(', ')', '÷'],
@@ -22,7 +22,7 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
     
     if (button === '=') {
       return `${baseStyle} ${
-        theme === 'dark'
+        resolvedTheme === 'dark'
           ? 'bg-gradient-to-r from-palette-4 to-palette-5 hover:from-palette-4/90 hover:to-palette-5/90 text-palette-1'
           : 'bg-gradient-to-r from-palette-3 to-palette-4 hover:from-palette-3/90 hover:to-palette-4/90 text-white'
       } shadow-lg`;
@@ -30,7 +30,7 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
     
     if (['÷', '×', '-', '+'].includes(button)) {
       return `${baseStyle} ${
-        theme === 'dark'
+        resolvedTheme === 'dark'
           ? 'bg-gradient-to-r from-palette-3 to-palette-4 hover:from-palette-3/90 hover:to-palette-4/90 text-palette-1'
           : 'bg-gradient-to-r from-palette-2 to-palette-3 hover:from-palette-2/90 hover:to-palette-3/90 text-white'
       }`;
@@ -38,14 +38,14 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
     
     if (['C', '(', ')', '⌫'].includes(button)) {
       return `${baseStyle} ${
-        theme === 'dark'
+        resolvedTheme === 'dark'
           ? 'bg-gradient-to-r from-palette-2/40 to-palette-3/40 hover:from-palette-2/60 hover:to-palette-3/60 text-palette-5 border border-palette-3/30'
           : 'bg-gradient-to-r from-palette-4/20 to-palette-5/20 hover:from-palette-4/30 hover:to-palette-5/30 text-palette-1 border border-palette-4/30'
       }`;
     }
     
     return `${baseStyle} ${
-      theme === 'dark'
+      resolvedTheme === 'dark'
         ? 'bg-palette-1/60 hover:bg-palette-1/80 text-palette-5 border border-palette-2/30 hover:border-palette-2/50'
         : 'bg-white/90 hover:bg-white text-palette-1 border border-palette-4/20 hover:border-palette-4/40'
     }`;

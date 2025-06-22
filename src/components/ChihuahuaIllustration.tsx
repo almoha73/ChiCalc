@@ -6,10 +6,10 @@ interface ChihuahuaIllustrationProps {
 }
 
 const ChihuahuaIllustration: React.FC<ChihuahuaIllustrationProps> = ({ className = "" }) => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   
-  // Colors adapt to theme using your palette
-  const colors = theme === 'dark' ? {
+  // Colors adapt to theme
+  const colors = resolvedTheme === 'dark' ? {
     primary: '#a0c95e',    // palette-4
     secondary: '#a0dd98',   // palette-5
     accent: '#a49837',      // palette-3
