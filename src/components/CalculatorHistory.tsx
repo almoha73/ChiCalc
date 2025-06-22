@@ -79,7 +79,7 @@ const CalculatorHistory: React.FC<CalculatorHistoryProps> = ({
           </div>
         ) : (
           <div className="p-4 space-y-3">
-            {[...history].reverse().map((item) => (
+            {history.map((item) => (
               <div
                 key={item.id}
                 onClick={() => onLoadFromHistory(item)}

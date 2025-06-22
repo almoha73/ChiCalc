@@ -25,11 +25,8 @@ export const useCalculator = () => {
           ...item,
           timestamp: new Date(item.timestamp)
         }));
-        // Trier par timestamp décroissant pour s'assurer de l'ordre
-        const sortedHistory = historyWithDates.sort((a: HistoryItem, b: HistoryItem) => 
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-        );
-        setHistory(sortedHistory);
+        // L'historique est déjà dans le bon ordre (plus récent en premier)
+        setHistory(historyWithDates);
       } catch (error) {
         console.error('Error loading history:', error);
       }
@@ -87,10 +84,9 @@ export const useCalculator = () => {
       timestamp: new Date()
     };
     
-    console.log('Adding to history:', newItem); // Debug
+    // Ajouter le nouvel élément au début pour avoir les plus récents en premier
     setHistory(prev => {
-      const newHistory = [newItem, ...prev.slice(0, 49)];
-      console.log('New history:', newHistory); // Debug
+      const newHistory = [newItem, ...prev.slice(0, 49)]; // Garder seulement les 50 derniers
       return newHistory;
     });
   }, []);
