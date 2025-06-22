@@ -6,7 +6,7 @@ interface CalculatorDisplayProps {
 }
 
 const CalculatorDisplay: React.FC<CalculatorDisplayProps> = ({ display }) => {
-  const { resolvedTheme } = useThemeContext(); // Changé ici
+  const { resolvedTheme } = useThemeContext();
   
   return (
     <div className={`rounded-2xl p-6 shadow-inner border transition-colors duration-300 ${

@@ -11,7 +11,6 @@ const Calculator: React.FC = () => {
   const { resolvedTheme } = useThemeContext(); // Changé ici
   const {
     display,
-    expression,
     history,
     handleButtonClick,
     clearHistory,

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useThemeContext } from './context/ThemeContext'; // Changé ici
 import Calculator from './components/Calculator';
 
