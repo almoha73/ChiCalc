@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trash2, Clock } from 'lucide-react';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeContext } from '../context/ThemeContext';
 
 interface HistoryItem {
   id: string;
@@ -20,7 +20,7 @@ const CalculatorHistory: React.FC<CalculatorHistoryProps> = ({
   onClearHistory,
   onLoadFromHistory
 }) => {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme } = useThemeContext(); // Changé ici
   
   return (
     <div className={`backdrop-blur-sm rounded-3xl shadow-2xl border h-full transition-colors duration-300 ${

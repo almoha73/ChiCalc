@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeContext } from '../context/ThemeContext';
 
 interface CalculatorDisplayProps {
   display: string;
 }
 
 const CalculatorDisplay: React.FC<CalculatorDisplayProps> = ({ display }) => {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme } = useThemeContext(); // Changé ici
   
   return (
     <div className={`rounded-2xl p-6 shadow-inner border transition-colors duration-300 ${

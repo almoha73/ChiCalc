@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeContext } from '../context/ThemeContext';
 
 interface ChihuahuaIllustrationProps {
   className?: string;
 }
 
 const ChihuahuaIllustration: React.FC<ChihuahuaIllustrationProps> = ({ className = "" }) => {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme } = useThemeContext(); // Changé ici
   
   // Colors adapt to theme
   const colors = resolvedTheme === 'dark' ? {

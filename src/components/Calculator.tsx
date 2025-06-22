@@ -5,10 +5,10 @@ import CalculatorHistory from './CalculatorHistory';
 import ChihuahuaIllustration from './ChihuahuaIllustration';
 import ThemeToggle from './ThemeToggle';
 import { useCalculator } from '../hooks/useCalculator';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeContext } from '../context/ThemeContext'; // Changé ici
 
 const Calculator: React.FC = () => {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme } = useThemeContext(); // Changé ici
   const {
     display,
     expression,

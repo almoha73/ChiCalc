@@ -1,13 +1,13 @@
 import React from 'react';
 import { Delete } from 'lucide-react';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeContext } from '../context/ThemeContext';
 
 interface CalculatorButtonsProps {
   onButtonClick: (value: string) => void;
 }
 
 const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) => {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme } = useThemeContext(); // Déplacé ici dans le composant
   
   const buttons = [
     ['C', '(', ')', '÷'],

@@ -1,9 +1,9 @@
 import React from 'react';
+import { useThemeContext } from './context/ThemeContext'; // Changé ici
 import Calculator from './components/Calculator';
-import { useTheme } from './hooks/useTheme';
 
 function App() {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme } = useThemeContext(); // Changé ici
   
   return (
     <div className={`min-h-screen transition-colors duration-300 flex items-center justify-center p-4 ${
