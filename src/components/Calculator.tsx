@@ -8,7 +8,7 @@ import { useCalculator } from '../hooks/useCalculator';
 import { useTheme } from '../hooks/useTheme';
 
 const Calculator: React.FC = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const {
     display,
     expression,
@@ -24,25 +24,25 @@ const Calculator: React.FC = () => {
         {/* Main Calculator */}
         <div className="lg:col-span-7">
           <div className={`backdrop-blur-sm rounded-3xl shadow-2xl border overflow-hidden transition-colors duration-300 ${
-            theme === 'dark'
+            resolvedTheme === 'dark'
               ? 'bg-palette-2/90 border-palette-3/30'
               : 'bg-white/95 border-palette-5/30'
           }`}>
             {/* Header with Chihuahua and Theme Toggle */}
             <div className={`relative p-6 border-b transition-colors duration-300 ${
-              theme === 'dark'
+              resolvedTheme === 'dark'
                 ? 'bg-gradient-to-r from-palette-3/20 to-palette-4/20 border-palette-3/20'
                 : 'bg-gradient-to-r from-palette-4/20 to-palette-5/20 border-palette-4/20'
             }`}>
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className={`text-2xl font-bold mb-2 transition-colors duration-300 ${
-                    theme === 'dark' ? 'text-palette-5' : 'text-palette-1'
+                    resolvedTheme === 'dark' ? 'text-palette-5' : 'text-palette-1'
                   }`}>
                     ChiCalc Pro
                   </h1>
                   <p className={`text-sm transition-colors duration-300 ${
-                    theme === 'dark' ? 'text-palette-4' : 'text-palette-2'
+                    resolvedTheme === 'dark' ? 'text-palette-4' : 'text-palette-2'
                   }`}>
                     Advanced Calculator
                   </p>
