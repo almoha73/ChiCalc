@@ -22,17 +22,29 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const updateResolvedTheme = () => {
-      const resolved = theme === 'system' ? (mediaQuery.matches ? 'dark' : 'light') : theme;
+      let resolved: 'light' | 'dark';
+      
+      if (theme === 'system') {
+        resolved = mediaQuery.matches ? 'dark' : 'light';
+      } else {
+        resolved = theme;
+      }
+      
       setResolvedTheme(resolved);
+      
+      // Appliquer le thème au document
       document.documentElement.classList.toggle('dark', resolved === 'dark');
     };
 
+    // Mise à jour initiale
     updateResolvedTheme();
-
+    
+    // Écouter les changements de thème système seulement en mode système
     if (theme === 'system') {
       mediaQuery.addEventListener('change', updateResolvedTheme);
     }
-
+    
+    // Sauvegarder dans localStorage
     localStorage.setItem('calculator-theme', theme);
 
     return () => {
@@ -41,7 +53,18 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    setTheme(prev => {
+      switch (prev) {
+        case 'light':
+          return 'dark';
+        case 'dark':
+          return 'system';
+        case 'system':
+          return 'light';
+        default:
+          return 'light';
+      }
+    });
   };
 
   return (
@@ -54,7 +77,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const useThemeContext = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useThemeContext must be used within a ThemeProvider');
+    throw new Error('useThemeContext doit être utilisé dans un ThemeProvider');
   }
   return context;
 };

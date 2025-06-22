@@ -5,12 +5,13 @@ import CalculatorHistory from './CalculatorHistory';
 import ChihuahuaIllustration from './ChihuahuaIllustration';
 import ThemeToggle from './ThemeToggle';
 import { useCalculator } from '../hooks/useCalculator';
-import { useThemeContext } from '../context/ThemeContext'; // Changé ici
+import { useThemeContext } from '../context/ThemeContext';
 
 const Calculator: React.FC = () => {
-  const { resolvedTheme } = useThemeContext(); // Changé ici
+  const { resolvedTheme } = useThemeContext();
   const {
     display,
+    expression,
     history,
     handleButtonClick,
     clearHistory,
@@ -20,14 +21,14 @@ const Calculator: React.FC = () => {
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Main Calculator */}
+        {/* Calculatrice Principale */}
         <div className="lg:col-span-7">
           <div className={`backdrop-blur-sm rounded-3xl shadow-2xl border overflow-hidden transition-colors duration-300 ${
             resolvedTheme === 'dark'
               ? 'bg-palette-2/90 border-palette-3/30'
               : 'bg-white/95 border-palette-5/30'
           }`}>
-            {/* Header with Chihuahua and Theme Toggle */}
+            {/* En-tête avec Chihuahua et Bouton Thème */}
             <div className={`relative p-6 border-b transition-colors duration-300 ${
               resolvedTheme === 'dark'
                 ? 'bg-gradient-to-r from-palette-3/20 to-palette-4/20 border-palette-3/20'
@@ -43,7 +44,7 @@ const Calculator: React.FC = () => {
                   <p className={`text-sm transition-colors duration-300 ${
                     resolvedTheme === 'dark' ? 'text-palette-4' : 'text-palette-2'
                   }`}>
-                    Advanced Calculator
+                    Calculatrice Avancée
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
@@ -53,14 +54,14 @@ const Calculator: React.FC = () => {
               </div>
             </div>
 
-            {/* Display */}
+            {/* Affichage */}
             <div className="p-6 pb-4">
               <CalculatorDisplay 
                 display={display}
               />
             </div>
 
-            {/* Buttons */}
+            {/* Boutons */}
             <div className="p-6 pt-2">
               <CalculatorButtons 
                 onButtonClick={handleButtonClick}
@@ -69,7 +70,7 @@ const Calculator: React.FC = () => {
           </div>
         </div>
 
-        {/* History Panel */}
+        {/* Panneau Historique */}
         <div className="lg:col-span-5">
           <CalculatorHistory 
             history={history}

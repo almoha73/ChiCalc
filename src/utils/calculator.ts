@@ -1,98 +1,98 @@
-// Safe evaluation of mathematical expressions
+// Évaluation sécurisée des expressions mathématiques
 export const evaluateExpression = (expression: string): number => {
   if (!expression || expression.trim() === '') {
     return 0;
   }
 
-  // Clean the expression
+  // Nettoyer l'expression
   let cleanExpression = expression
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
-    .replace(/[^0-9+\-*/.() ]/g, ''); // Remove any invalid characters
+    .replace(/[^0-9+\-*/.() ]/g, ''); // Supprimer les caractères invalides
 
-  // Check for valid parentheses
+  // Vérifier les parenthèses valides
   if (!hasValidParentheses(cleanExpression)) {
-    throw new Error('Invalid parentheses');
+    throw new Error('Parenthèses invalides');
   }
 
-  // Check for valid expression pattern
+  // Vérifier le format de l'expression
   if (!isValidExpression(cleanExpression)) {
-    throw new Error('Invalid expression');
+    throw new Error('Expression invalide');
   }
 
   try {
-    // Use Function constructor for safe evaluation
+    // Utiliser le constructeur Function pour une évaluation sécurisée
     const result = new Function(`"use strict"; return (${cleanExpression})`)();
     
     if (typeof result !== 'number' || !isFinite(result)) {
-      throw new Error('Invalid calculation result');
+      throw new Error('Résultat de calcul invalide');
     }
     
     return result;
   } catch (error) {
-    throw new Error('Calculation error');
+    throw new Error('Erreur de calcul');
   }
 };
 
-// Check if parentheses are balanced and valid
+// Vérifier si les parenthèses sont équilibrées et valides
 const hasValidParentheses = (expression: string): boolean => {
   let count = 0;
   for (const char of expression) {
     if (char === '(') count++;
     if (char === ')') count--;
-    if (count < 0) return false; // Closing before opening
+    if (count < 0) return false; // Fermeture avant ouverture
   }
-  return count === 0; // Must be balanced
+  return count === 0; // Doit être équilibré
 };
 
-// Validate expression structure
+// Valider la structure de l'expression
 const isValidExpression = (expression: string): boolean => {
-  // Remove spaces
+  // Supprimer les espaces
   const expr = expression.replace(/\s/g, '');
   
-  // Empty expression is invalid
+  // Expression vide est invalide
   if (expr === '') return false;
   
-  // Check for consecutive operators
+  // Vérifier les opérateurs consécutifs
   if (/[+\-*/]{2,}/.test(expr)) return false;
   
-  // Check for operators at the beginning (except minus for negative numbers)
+  // Vérifier les opérateurs au début (sauf moins pour les nombres négatifs)
   if (/^[+*/]/.test(expr)) return false;
   
-  // Check for operators at the end
+  // Vérifier les opérateurs à la fin
   if (/[+\-*/]$/.test(expr)) return false;
   
-  // Check for invalid character sequences
-  if (/[+\-*/]\)/.test(expr)) return false; // Operator before closing parenthesis
-  if (/\([+*/]/.test(expr)) return false; // Invalid operator after opening parenthesis
+  // Vérifier les séquences de caractères invalides
+  if (/[+\-*/]\)/.test(expr)) return false; // Opérateur avant parenthèse fermante
+  if (/\([+*/]/.test(expr)) return false; // Opérateur invalide après parenthèse ouvrante
   
   return true;
 };
 
-// Format number for display
+// Formater le nombre pour l'affichage
 export const formatNumber = (num: number): string => {
   if (!isFinite(num)) {
-    return 'Error';
+    return 'Erreur';
   }
   
-  // Handle very large numbers
+  // Gérer les très grands nombres
   if (Math.abs(num) > 1e15) {
     return num.toExponential(6);
   }
   
-  // Handle very small numbers
+  // Gérer les très petits nombres
   if (Math.abs(num) < 1e-10 && num !== 0) {
     return num.toExponential(6);
   }
   
-  // Round to avoid floating point precision issues
+  // Arrondir pour éviter les problèmes de précision des nombres flottants
   const rounded = Math.round(num * 1e10) / 1e10;
   
-  // Format with appropriate decimal places
+  // Formater avec le nombre approprié de décimales
   if (Number.isInteger(rounded)) {
     return rounded.toString();
   }
   
-  // Limit decimal places and remove trailing zeros
+  // Limiter les décimales et supprimer les zéros de fin
   return parseFloat(rounded.toFixed(10)).toString();
 };
