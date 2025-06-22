@@ -25,7 +25,11 @@ export const useCalculator = () => {
           ...item,
           timestamp: new Date(item.timestamp)
         }));
-        setHistory(historyWithDates);
+        // Trier par timestamp décroissant pour s'assurer de l'ordre
+        const sortedHistory = historyWithDates.sort((a: HistoryItem, b: HistoryItem) => 
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+        setHistory(sortedHistory);
       } catch (error) {
         console.error('Error loading history:', error);
       }
@@ -83,9 +87,11 @@ export const useCalculator = () => {
       timestamp: new Date()
     };
     
+    console.log('Adding to history:', newItem); // Debug
     setHistory(prev => {
-      const updated = [newItem, ...prev.slice(0, 9)]; // Keep only last 10 items
-      return updated;
+      const newHistory = [newItem, ...prev.slice(0, 49)];
+      console.log('New history:', newHistory); // Debug
+      return newHistory;
     });
   }, []);
 
