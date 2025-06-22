@@ -25,7 +25,6 @@ export const useCalculator = () => {
           ...item,
           timestamp: new Date(item.timestamp)
         }));
-        // L'historique est déjà dans le bon ordre (plus récent en premier)
         setHistory(historyWithDates);
       } catch (error) {
         console.error('Error loading history:', error);
@@ -38,44 +37,6 @@ export const useCalculator = () => {
     localStorage.setItem('calculator-history', JSON.stringify(history));
   }, [history]);
 
-  // Keyboard support
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      event.preventDefault();
-      
-      const key = event.key;
-      
-      // Number keys
-      if (/^[0-9]$/.test(key)) {
-        handleButtonClick(key);
-        return;
-      }
-      
-      // Operator keys
-      const operatorMap: { [key: string]: string } = {
-        '+': '+',
-        '-': '-',
-        '*': '×',
-        '/': '÷',
-        '(': '(',
-        ')': ')',
-        '.': '.',
-        'Enter': '=',
-        '=': '=',
-        'Escape': 'C',
-        'Backspace': '⌫',
-        'Delete': 'C'
-      };
-      
-      if (operatorMap[key]) {
-        handleButtonClick(operatorMap[key]);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
-
   const addToHistory = useCallback((expr: string, result: string) => {
     const newItem: HistoryItem = {
       id: Date.now().toString(),
@@ -84,7 +45,6 @@ export const useCalculator = () => {
       timestamp: new Date()
     };
     
-    // Ajouter le nouvel élément au début pour avoir les plus récents en premier
     setHistory(prev => {
       const newHistory = [newItem, ...prev.slice(0, 49)]; // Garder seulement les 50 derniers
       return newHistory;
@@ -164,6 +124,46 @@ export const useCalculator = () => {
     setDisplay(newExpression);
     setIsResult(false);
   }, [expression, lastResult, isResult, addToHistory]);
+
+  // Keyboard support - Fixed version
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Don't prevent default for all keys, only for calculator keys
+      const key = event.key;
+      
+      // Number keys
+      if (/^[0-9]$/.test(key)) {
+        event.preventDefault();
+        handleButtonClick(key);
+        return;
+      }
+      
+      // Operator keys
+      const operatorMap: { [key: string]: string } = {
+        '+': '+',
+        '-': '-',
+        '*': '×',
+        '/': '÷',
+        '(': '(',
+        ')': ')',
+        '.': '.',
+        'Enter': '=',
+        ' ': '=', // Space bar for equals
+        '=': '=',
+        'Escape': 'C',
+        'Backspace': '⌫',
+        'Delete': 'C'
+      };
+      
+      if (operatorMap[key]) {
+        event.preventDefault();
+        handleButtonClick(operatorMap[key]);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [handleButtonClick]); // Add handleButtonClick as dependency
 
   const clearHistory = useCallback(() => {
     setHistory([]);
