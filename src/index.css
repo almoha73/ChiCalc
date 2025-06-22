@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-palette-1: #321114;
+  --color-palette-2: #6b3f24;
+  --color-palette-3: #a49837;
+  --color-palette-4: #a0c95e;
+  --color-palette-5: #a0dd98;
+}
