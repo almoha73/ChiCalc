@@ -8,6 +8,8 @@
   --color-palette-5: #a0dd98;
 }
 
+@variant dark (&:where(.dark, .dark *));
+
 /* Global styles for theme transitions */
 * {
   transition-property: background-color, border-color, color, fill, stroke;
