@@ -17,6 +17,19 @@
         height: 100dvh; /* Dynamic viewport height pour mobile */
         overflow: hidden;
       }
+      
+      /* Sur desktop, permettre un ajustement plus flexible */
+      @media (min-width: 768px) {
+        html, body {
+          overflow: auto;
+        }
+        
+        #root {
+          min-height: 100vh;
+          min-height: 100dvh;
+          overflow: visible;
+        }
+      }
     </style>
   </head>
   <body>
