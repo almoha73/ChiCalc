@@ -18,7 +18,7 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
   ];
 
   const getButtonStyle = (button: string) => {
-    const baseStyle = "h-12 md:h-14 lg:h-16 rounded-xl font-bold text-lg md:text-xl lg:text-2xl transition-all duration-200 transform active:scale-95 shadow-lg hover:shadow-xl";
+    const baseStyle = "h-11 md:h-14 lg:h-16 rounded-xl font-bold text-lg md:text-xl lg:text-2xl transition-all duration-200 transform active:scale-95 shadow-lg hover:shadow-xl";
     
     if (button === '=') {
       return `${baseStyle} ${

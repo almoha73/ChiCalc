@@ -29,7 +29,7 @@ const Calculator: React.FC = () => {
             : 'bg-white/95 border-palette-5/30'
         }`}>
           {/* En-tête avec Chihuahua et Boutons */}
-          <div className={`relative p-4 md:p-6 border-b transition-colors duration-300 flex-shrink-0 ${
+          <div className={`relative p-3 md:p-6 border-b transition-colors duration-300 flex-shrink-0 ${
             theme === 'dark'
               ? 'bg-gradient-to-r from-palette-3/20 to-palette-4/20 border-palette-3/20'
               : 'bg-gradient-to-r from-palette-4/20 to-palette-5/20 border-palette-4/20'
@@ -76,14 +76,14 @@ const Calculator: React.FC = () => {
           </div>
 
           {/* Affichage */}
-          <div className="p-4 md:p-6 pb-2 md:pb-4 flex-shrink-0">
+          <div className="p-3 md:p-6 pb-2 md:pb-4 flex-shrink-0">
             <CalculatorDisplay 
               display={display}
             />
           </div>
 
           {/* Boutons */}
-          <div className="p-4 md:p-6 pt-2 flex-1 md:flex-none flex flex-col justify-end">
+          <div className="p-3 md:p-6 pt-1 flex-1 md:flex-none flex flex-col justify-end">
             <CalculatorButtons 
               onButtonClick={handleButtonClick}
             />
