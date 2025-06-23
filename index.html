@@ -3,8 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Calculatrice Avancée avec Design Chihuahua</title>
+    <style>
+      /* Fix pour éviter le scroll sur mobile */
+      html, body {
+        height: 100%;
+        overflow-x: hidden;
+      }
+      
+      /* Fix pour la hauteur sur iOS Safari */
+      html {
+        height: -webkit-fill-available;
+      }
+      
+      body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+      }
+      
+      /* Empêcher le zoom sur les inputs sur iOS */
+      input, select, textarea {
+        font-size: 16px;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
