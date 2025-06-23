@@ -5,7 +5,7 @@ function App() {
   const { theme } = useThemeContext();
   
   return (
-    <div className={`min-h-screen min-h-[100dvh] transition-colors duration-300 flex items-center justify-center p-2 sm:p-4 ${
+    <div className={`h-full transition-colors duration-300 flex items-center justify-center p-2 ${
       theme === 'dark' 
         ? 'bg-gradient-to-br from-palette-1 via-palette-2 to-palette-3' 
         : 'bg-gradient-to-br from-palette-5 via-palette-4 to-palette-3'
