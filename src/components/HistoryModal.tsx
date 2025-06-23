@@ -42,20 +42,21 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
       />
       
       {/* Modal */}
-      <div className={`relative w-full max-w-sm sm:max-w-md max-h-[85vh] sm:max-h-[80vh] rounded-2xl sm:rounded-3xl shadow-2xl border transition-colors duration-300 ${
+      <div className={`relative w-full max-w-[90vw] sm:max-w-md md:max-w-lg max-h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl border transition-colors duration-300 ${
         theme === 'dark'
           ? 'bg-palette-2/95 border-palette-3/30'
           : 'bg-white/95 border-palette-5/30'
       }`}>
         {/* En-tête */}
-        <div className={`p-4 sm:p-6 border-b transition-colors duration-300 ${
+        <div className={`p-3 sm:p-4 md:p-6 border-b transition-colors duration-300 ${
           theme === 'dark' ? 'border-palette-3/20' : 'border-palette-4/20'
         }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Clock size={18} className={`sm:hidden ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
-              <Clock size={20} className={`hidden sm:block ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
-              <h2 className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
+              <Clock size={20} className={`hidden sm:block md:hidden ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
+              <Clock size={24} className={`hidden md:block ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
+              <h2 className={`text-lg sm:text-xl md:text-2xl font-bold transition-colors duration-300 ${
                 theme === 'dark' ? 'text-palette-5' : 'text-palette-1'
               }`}>Historique</h2>
             </div>
@@ -63,49 +64,52 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
               {history.length > 0 && (
                 <button
                   onClick={onClearHistory}
-                  className={`p-2 rounded-lg transition-colors ${
+                  className={`p-2 sm:p-3 rounded-lg transition-colors ${
                     theme === 'dark'
                       ? 'bg-palette-1/20 hover:bg-palette-1/40 text-palette-5'
                       : 'bg-palette-1/10 hover:bg-palette-1/20 text-palette-1'
                   }`}
                   title="Effacer l'historique"
                 >
-                  <Trash2 size={14} className="sm:hidden" />
-                  <Trash2 size={16} className="hidden sm:block" />
+                  <Trash2 size={16} className="sm:hidden" />
+                  <Trash2 size={18} className="hidden sm:block md:hidden" />
+                  <Trash2 size={20} className="hidden md:block" />
                 </button>
               )}
               <button
                 onClick={onClose}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`p-2 sm:p-3 rounded-lg transition-colors ${
                   theme === 'dark'
                     ? 'bg-palette-1/20 hover:bg-palette-1/40 text-palette-5'
                     : 'bg-palette-1/10 hover:bg-palette-1/20 text-palette-1'
                 }`}
                 title="Fermer"
               >
-                <X size={14} className="sm:hidden" />
-                <X size={16} className="hidden sm:block" />
+                <X size={16} className="sm:hidden" />
+                <X size={18} className="hidden sm:block md:hidden" />
+                <X size={20} className="hidden md:block" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Contenu */}
-        <div className="p-4 sm:p-6 overflow-y-auto" style={{ maxHeight: 'calc(85vh - 120px)' }}>
+        <div className="p-3 sm:p-4 md:p-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 100px)' }}>
           {history.length === 0 ? (
             <div className="text-center py-8 sm:py-12">
-              <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors duration-300 ${
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors duration-300 ${
                 theme === 'dark'
                   ? 'bg-gradient-to-br from-palette-3/20 to-palette-4/20'
                   : 'bg-gradient-to-br from-palette-4/20 to-palette-5/20'
               }`}>
                 <Clock size={20} className={`sm:hidden ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
-                <Clock size={24} className={`hidden sm:block ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
+                <Clock size={24} className={`hidden sm:block md:hidden ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
+                <Clock size={28} className={`hidden md:block ${theme === 'dark' ? 'text-palette-4' : 'text-palette-3'}`} />
               </div>
-              <p className={`text-sm sm:text-base transition-colors duration-300 ${
+              <p className={`text-sm sm:text-base md:text-lg transition-colors duration-300 ${
                 theme === 'dark' ? 'text-palette-4' : 'text-palette-2'
               }`}>Aucun calcul pour le moment</p>
-              <p className={`text-xs sm:text-sm mt-1 transition-colors duration-300 ${
+              <p className={`text-xs sm:text-sm md:text-base mt-1 transition-colors duration-300 ${
                 theme === 'dark' ? 'text-palette-4/70' : 'text-palette-2/70'
               }`}>
                 L'historique de vos calculs apparaîtra ici
@@ -117,7 +121,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
                 <div
                   key={item.id}
                   onClick={() => handleLoadFromHistory(item)}
-                  className={`rounded-lg sm:rounded-xl p-3 sm:p-5 cursor-pointer transition-all duration-200 border hover:shadow-md group ${
+                  className={`rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 cursor-pointer transition-all duration-200 border hover:shadow-md group ${
                     theme === 'dark'
                       ? 'bg-gradient-to-r from-palette-1/20 to-palette-2/20 hover:from-palette-1/40 hover:to-palette-2/40 border-palette-3/20 hover:border-palette-3/40'
                       : 'bg-gradient-to-r from-palette-5/10 to-palette-4/10 hover:from-palette-5/20 hover:to-palette-4/20 border-palette-4/20 hover:border-palette-4/40'
@@ -125,17 +129,17 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className={`text-sm sm:text-base font-mono mb-1 sm:mb-2 font-semibold transition-colors duration-300 ${
+                      <div className={`text-sm sm:text-base md:text-lg font-mono mb-1 sm:mb-2 font-semibold transition-colors duration-300 ${
                         theme === 'dark' ? 'text-palette-4' : 'text-palette-2'
                       }`}>
                         {item.expression}
                       </div>
-                      <div className={`text-lg sm:text-xl font-bold mb-2 sm:mb-3 font-mono transition-colors duration-300 ${
+                      <div className={`text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 font-mono transition-colors duration-300 ${
                         theme === 'dark' ? 'text-palette-5' : 'text-palette-1'
                       }`}>
                         = {item.result}
                       </div>
-                      <div className={`text-xs sm:text-sm transition-colors duration-300 ${
+                      <div className={`text-xs sm:text-sm md:text-base transition-colors duration-300 ${
                         theme === 'dark' ? 'text-palette-4/70' : 'text-palette-2/70'
                       }`}>
                         {item.timestamp.toLocaleString('fr-FR', {
@@ -153,7 +157,13 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
                     />
                     <RotateCcw 
                       size={18} 
-                      className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 sm:ml-3 mt-1 hidden sm:block ${
+                      className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 sm:ml-3 mt-1 hidden sm:block md:hidden ${
+                        theme === 'dark' ? 'text-palette-4' : 'text-palette-3'
+                      }`} 
+                    />
+                    <RotateCcw 
+                      size={20} 
+                      className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 sm:ml-3 mt-1 hidden md:block ${
                         theme === 'dark' ? 'text-palette-4' : 'text-palette-3'
                       }`} 
                     />

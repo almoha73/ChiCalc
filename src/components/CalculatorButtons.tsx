@@ -18,7 +18,7 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
   ];
 
   const getButtonStyle = (button: string) => {
-    const baseStyle = "h-12 sm:h-16 md:h-18 rounded-lg sm:rounded-xl font-bold text-lg sm:text-2xl transition-all duration-200 transform active:scale-95 shadow-lg hover:shadow-xl";
+    const baseStyle = "h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg sm:rounded-xl md:rounded-2xl font-bold text-lg sm:text-2xl md:text-3xl lg:text-4xl transition-all duration-200 transform active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center";
     
     if (button === '=') {
       return `${baseStyle} ${
@@ -53,7 +53,7 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
   };
 
   return (
-    <div className="grid grid-cols-4 gap-2 sm:gap-4">
+    <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-5 h-full">
       {buttons.flat().map((button, index) => (
         <button
           key={index}
@@ -61,9 +61,12 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
           className={getButtonStyle(button)}
         >
           {button === '⌫' ? (
-            <Delete size={20} className="mx-auto sm:hidden" />
-          ) : button === '⌫' ? (
-            <Delete size={24} className="mx-auto hidden sm:block" />
+            <>
+              <Delete size={18} className="sm:hidden" />
+              <Delete size={24} className="hidden sm:block md:hidden" />
+              <Delete size={28} className="hidden md:block lg:hidden" />
+              <Delete size={32} className="hidden lg:block" />
+            </>
           ) : (
             button
           )}
