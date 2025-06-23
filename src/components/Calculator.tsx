@@ -22,11 +22,11 @@ const Calculator: React.FC = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+    <div className="w-full h-full max-w-full max-h-full flex flex-col items-center justify-center">
+      <div className="w-full h-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl flex flex-col justify-center mx-auto p-0 sm:p-2" style={{height: '100dvh'}}>
         {/* Calculatrice Principale */}
-        <div className="lg:col-span-7">
-          <div className={`backdrop-blur-sm rounded-3xl shadow-2xl border overflow-hidden transition-colors duration-300 ${
+        <div className="flex-1 flex flex-col justify-center">
+          <div className={`h-full flex flex-col justify-between backdrop-blur-sm rounded-2xl shadow-2xl border overflow-hidden transition-colors duration-300 ${
             resolvedTheme === 'dark'
               ? 'bg-palette-2/90 border-palette-3/30'
               : 'bg-white/95 border-palette-5/30'
@@ -65,14 +65,14 @@ const Calculator: React.FC = () => {
             </div>
 
             {/* Affichage */}
-            <div className="p-4 lg:p-6 pb-3 lg:pb-4">
+            <div className="p-2 sm:p-4 lg:p-6 pb-2 sm:pb-3 lg:pb-4 flex-shrink-0">
               <CalculatorDisplay 
                 display={display}
               />
             </div>
 
             {/* Boutons */}
-            <div className="p-4 lg:p-6 pt-2">
+            <div className="p-2 sm:p-4 lg:p-6 pt-2 flex-shrink-0">
               <CalculatorButtons 
                 onButtonClick={handleButtonClick}
               />
