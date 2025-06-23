@@ -5,36 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculatrice Avancée avec Design Chihuahua</title>
-    <style>
-      /* Empêcher le scroll vertical sur mobile */
-      html, body {
-        height: 100%;
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-      }
-      
-      #root {
-        height: 100vh;
-        height: 100dvh; /* Dynamic viewport height pour mobile */
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-      }
-      
-      /* Sur desktop, permettre un ajustement plus flexible */
-      @media (min-width: 768px) {
-        html, body {
-          overflow: auto;
-        }
-        
-        #root {
-          min-height: 100vh;
-          min-height: 100dvh;
-          overflow: visible;
-        }
-      }
-    </style>
   </head>
   <body>
     <div id="root"></div>
