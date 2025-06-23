@@ -113,7 +113,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
                 <div
                   key={item.id}
                   onClick={() => handleLoadFromHistory(item)}
-                  className={`rounded-xl p-4 cursor-pointer transition-all duration-200 border hover:shadow-md group ${
+                  className={`rounded-xl p-5 cursor-pointer transition-all duration-200 border hover:shadow-md group ${
                     theme === 'dark'
                       ? 'bg-gradient-to-r from-palette-1/20 to-palette-2/20 hover:from-palette-1/40 hover:to-palette-2/40 border-palette-3/20 hover:border-palette-3/40'
                       : 'bg-gradient-to-r from-palette-5/10 to-palette-4/10 hover:from-palette-5/20 hover:to-palette-4/20 border-palette-4/20 hover:border-palette-4/40'
@@ -121,17 +121,17 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className={`text-sm font-mono mb-1 transition-colors duration-300 ${
+                      <div className={`text-base font-mono mb-2 font-semibold transition-colors duration-300 ${
                         theme === 'dark' ? 'text-palette-4' : 'text-palette-2'
                       }`}>
                         {item.expression}
                       </div>
-                      <div className={`text-lg font-semibold mb-2 transition-colors duration-300 ${
+                      <div className={`text-xl font-bold mb-3 font-mono transition-colors duration-300 ${
                         theme === 'dark' ? 'text-palette-5' : 'text-palette-1'
                       }`}>
                         = {item.result}
                       </div>
-                      <div className={`text-xs transition-colors duration-300 ${
+                      <div className={`text-sm transition-colors duration-300 ${
                         theme === 'dark' ? 'text-palette-4/70' : 'text-palette-2/70'
                       }`}>
                         {item.timestamp.toLocaleString('fr-FR', {
@@ -142,8 +142,8 @@ const HistoryModal: React.FC<HistoryModalProps> = ({
                       </div>
                     </div>
                     <RotateCcw 
-                      size={16} 
-                      className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 mt-1 ${
+                      size={18} 
+                      className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-3 mt-1 ${
                         theme === 'dark' ? 'text-palette-4' : 'text-palette-3'
                       }`} 
                     />
