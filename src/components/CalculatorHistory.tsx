@@ -77,7 +77,7 @@ const CalculatorHistory: React.FC<CalculatorHistoryProps> = ({
           </div>
         ) : (
           <div className="space-y-3 max-h-96 overflow-y-auto">
-            {history.slice().reverse().map((item) => (
+            {history.map((item) => (
               <div
                 key={item.id}
                 onClick={() => onLoadFromHistory(item)}

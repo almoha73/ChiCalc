@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, Monitor } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useThemeContext } from '../context/ThemeContext';
 
 const ThemeToggle: React.FC = () => {
@@ -11,8 +11,6 @@ const ThemeToggle: React.FC = () => {
         return <Sun size={20} />;
       case 'dark':
         return <Moon size={20} />;
-      case 'system':
-        return <Monitor size={20} />;
       default:
         return <Sun size={20} />;
     }
@@ -23,9 +21,7 @@ const ThemeToggle: React.FC = () => {
       case 'light':
         return 'Thème clair - Cliquez pour le thème sombre';
       case 'dark':
-        return 'Thème sombre - Cliquez pour le thème système';
-      case 'system':
-        return `Thème système (${resolvedTheme === 'dark' ? 'sombre' : 'clair'}) - Cliquez pour le thème clair`;
+        return 'Thème sombre - Cliquez pour le thème clair';
       default:
         return 'Changer de thème';
     }
@@ -43,15 +39,6 @@ const ThemeToggle: React.FC = () => {
         title={getTitle()}
       >
         {getIcon()}
-        
-        {/* Indicateur pour le thème système */}
-        {theme === 'system' && (
-          <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 transition-colors duration-300 ${
-            resolvedTheme === 'dark'
-              ? 'bg-palette-5 border-palette-1'
-              : 'bg-palette-3 border-white'
-          }`} />
-        )}
       </button>
     </div>
   );

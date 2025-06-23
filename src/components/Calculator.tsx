@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CalculatorDisplay from './CalculatorDisplay';
 import CalculatorButtons from './CalculatorButtons';
 import CalculatorHistory from './CalculatorHistory';
 import ChihuahuaIllustration from './ChihuahuaIllustration';
 import ThemeToggle from './ThemeToggle';
+import Modal from './Modal';
 import { useCalculator } from '../hooks/useCalculator';
 import { useThemeContext } from '../context/ThemeContext';
 
@@ -18,6 +19,8 @@ const Calculator: React.FC = () => {
     loadFromHistory
   } = useCalculator();
 
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
@@ -28,7 +31,7 @@ const Calculator: React.FC = () => {
               ? 'bg-palette-2/90 border-palette-3/30'
               : 'bg-white/95 border-palette-5/30'
           }`}>
-            {/* En-tête avec Chihuahua et Bouton Thème */}
+            {/* En-tête avec Chihuahua, Bouton Thème et Historique */}
             <div className={`relative p-4 lg:p-6 border-b transition-colors duration-300 ${
               resolvedTheme === 'dark'
                 ? 'bg-gradient-to-r from-palette-3/20 to-palette-4/20 border-palette-3/20'
@@ -49,6 +52,13 @@ const Calculator: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 lg:gap-4">
                   <ThemeToggle />
+                  <button
+                    onClick={() => setIsHistoryOpen(true)}
+                    className="p-2 rounded-lg bg-palette-4 text-white hover:bg-palette-5 transition-colors shadow-md"
+                    title="Afficher l'historique"
+                  >
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 3v5h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M3.05 13A9 9 0 1 0 6 5.3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </button>
                   <ChihuahuaIllustration className="w-16 h-16 lg:w-20 lg:h-20 opacity-90" />
                 </div>
               </div>
@@ -70,15 +80,18 @@ const Calculator: React.FC = () => {
           </div>
         </div>
 
-        {/* Panneau Historique */}
-        <div className="lg:col-span-5">
-          <CalculatorHistory 
-            history={history}
-            onClearHistory={clearHistory}
-            onLoadFromHistory={loadFromHistory}
-          />
-        </div>
+        {/* Panneau Historique supprimé, remplacé par la modale */}
       </div>
+      <Modal isOpen={isHistoryOpen} onClose={() => setIsHistoryOpen(false)} title="Historique des calculs">
+        <CalculatorHistory 
+          history={history}
+          onClearHistory={clearHistory}
+          onLoadFromHistory={item => {
+            loadFromHistory(item);
+            setIsHistoryOpen(false);
+          }}
+        />
+      </Modal>
     </div>
   );
 };
