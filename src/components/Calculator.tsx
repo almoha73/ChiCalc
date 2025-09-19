@@ -21,10 +21,12 @@ const Calculator: React.FC = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   return (
-    <div className="w-full">
-      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto">
+
+    <div className="flex w-full flex-1 sm:flex-none">
+      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto flex flex-col flex-1 sm:flex-none">
         {/* Calculatrice Principale */}
-        <div className={`flex flex-col backdrop-blur-sm rounded-2xl shadow-2xl border overflow-hidden transition-colors duration-300 ${
+        <div className={`flex flex-col h-full sm:h-auto backdrop-blur-sm rounded-2xl shadow-2xl border overflow-hidden transition-colors duration-300 ${
+ main
           resolvedTheme === 'dark'
             ? 'bg-palette-2/90 border-palette-3/30'
             : 'bg-white/95 border-palette-5/30'
