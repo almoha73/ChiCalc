@@ -8,6 +8,50 @@ interface HistoryItem {
   timestamp: Date;
 }
 
+type StoredHistoryItem = Omit<HistoryItem, 'timestamp'> & { timestamp: string };
+
+const isOperator = (char: string) => ['+', '-', '*', '/'].includes(char);
+
+const isUnaryMinus = (expression: string, index: number) => {
+  if (expression[index] !== '-') {
+    return false;
+  }
+
+  if (index === 0) {
+    return true;
+  }
+
+  const previous = expression[index - 1];
+  return previous !== ')' && (isOperator(previous) || previous === '(');
+};
+
+const getCurrentNumberSegment = (expression: string) => {
+  let segment = '';
+
+  for (let i = expression.length - 1; i >= 0; i -= 1) {
+    const char = expression[i];
+
+    if (/\d/.test(char)) {
+      segment = char + segment;
+      continue;
+    }
+
+    if (char === '.') {
+      segment = char + segment;
+      continue;
+    }
+
+    if (char === '-' && isUnaryMinus(expression, i)) {
+      segment = char + segment;
+      continue;
+    }
+
+    break;
+  }
+
+  return segment;
+};
+
 export const useCalculator = () => {
   const [display, setDisplay] = useState('0');
   const [expression, setExpression] = useState('');
@@ -17,11 +61,15 @@ export const useCalculator = () => {
 
   // Load history from localStorage on mount
   useEffect(() => {
-    const savedHistory = localStorage.getItem('calculator-history');
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const savedHistory = window.localStorage.getItem('calculator-history');
     if (savedHistory) {
       try {
-        const parsed = JSON.parse(savedHistory);
-        const historyWithDates = parsed.map((item: any) => ({
+        const parsed = JSON.parse(savedHistory) as StoredHistoryItem[];
+        const historyWithDates = parsed.map(item => ({
           ...item,
           timestamp: new Date(item.timestamp)
         }));
@@ -34,7 +82,11 @@ export const useCalculator = () => {
 
   // Save history to localStorage whenever history changes
   useEffect(() => {
-    localStorage.setItem('calculator-history', JSON.stringify(history));
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.localStorage.setItem('calculator-history', JSON.stringify(history));
   }, [history]);
 
   const addToHistory = useCallback((expr: string, result: string) => {
@@ -88,7 +140,7 @@ export const useCalculator = () => {
         addToHistory(expression, formattedResult);
         setExpression('');
         setIsResult(true);
-      } catch (error) {
+      } catch {
         setDisplay('Error');
         setTimeout(() => {
           setDisplay('0');
@@ -101,14 +153,30 @@ export const useCalculator = () => {
 
     // Handle operators and numbers
     let newExpression = expression;
-    
-    // If we just calculated something and user enters a number, start fresh
-    if (isResult && /^\d$/.test(value)) {
+
+    // If we just calculated something and user enters a number or decimal, start fresh
+    if (isResult && (/^\d$/.test(value) || value === '.')) {
       newExpression = '';
       setLastResult(null);
       setIsResult(false);
     }
-    
+
+    if (value === '.') {
+      const currentSegment = getCurrentNumberSegment(newExpression);
+
+      if (currentSegment.includes('.')) {
+        return;
+      }
+
+      const needsLeadingZero = currentSegment === '' || currentSegment === '-';
+      const updatedExpression = newExpression + (needsLeadingZero ? '0.' : '.');
+
+      setExpression(updatedExpression);
+      setDisplay(updatedExpression);
+      setIsResult(false);
+      return;
+    }
+
     // If we just calculated something and user enters an operator, continue with result
     if (isResult && ['+', '-', '×', '÷'].includes(value)) {
       newExpression = lastResult || '';
@@ -119,7 +187,7 @@ export const useCalculator = () => {
     // Convert display symbols to calculation symbols for internal use
     const calcValue = value === '×' ? '*' : value === '÷' ? '/' : value;
     newExpression += calcValue;
-    
+
     setExpression(newExpression);
     setDisplay(newExpression);
     setIsResult(false);
@@ -167,7 +235,9 @@ export const useCalculator = () => {
 
   const clearHistory = useCallback(() => {
     setHistory([]);
-    localStorage.removeItem('calculator-history');
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem('calculator-history');
+    }
   }, []);
 
   const loadFromHistory = useCallback((item: HistoryItem) => {

@@ -18,7 +18,7 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
   ];
 
   const getButtonStyle = (button: string) => {
-    const baseStyle = "min-h-[3.5rem] h-full rounded-xl font-semibold text-base sm:text-lg lg:text-xl transition-all duration-200 transform active:scale-95 shadow-sm hover:shadow-md";
+    const baseStyle = "min-h-[2.75rem] sm:min-h-[3.25rem] lg:min-h-[3.5rem] h-full rounded-xl font-semibold text-sm sm:text-lg lg:text-xl transition-all duration-200 transform active:scale-95 shadow-sm hover:shadow-md";
     
     if (button === '=') {
       return `${baseStyle} ${
@@ -52,15 +52,15 @@ const CalculatorButtons: React.FC<CalculatorButtonsProps> = ({ onButtonClick }) 
   };
 
   return (
-    <div className="grid grid-cols-4 gap-2 sm:gap-3 h-full min-h-0">
+    <div className="grid grid-cols-4 gap-1.5 sm:gap-2 lg:gap-3 h-full min-h-0">
       {buttons.flat().map((button, index) => (
         <button
           key={index}
           onClick={() => onButtonClick(button)}
-          className={getButtonStyle(button) + ' h-full flex items-center justify-center'}
+          className={`${getButtonStyle(button)} h-full flex items-center justify-center`}
         >
           {button === '⌫' ? (
-            <Delete size={18} className="mx-auto sm:w-5 sm:h-5" />
+            <Delete size={16} className="mx-auto sm:w-5 sm:h-5" />
           ) : (
             button
           )}

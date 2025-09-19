@@ -1,3 +1,5 @@
+const isOperator = (char: string) => ['+', '-', '*', '/'].includes(char);
+
 // Évaluation sécurisée des expressions mathématiques
 export const evaluateExpression = (expression: string): number => {
   if (!expression || expression.trim() === '') {
@@ -9,6 +11,10 @@ export const evaluateExpression = (expression: string): number => {
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
     .replace(/[^0-9+\-*/.() ]/g, ''); // Supprimer les caractères invalides
+
+  while (cleanExpression.includes('--')) {
+    cleanExpression = cleanExpression.replace(/--/g, '- -');
+  }
 
   // Vérifier les parenthèses valides
   if (!hasValidParentheses(cleanExpression)) {
@@ -23,13 +29,13 @@ export const evaluateExpression = (expression: string): number => {
   try {
     // Utiliser le constructeur Function pour une évaluation sécurisée
     const result = new Function(`"use strict"; return (${cleanExpression})`)();
-    
+
     if (typeof result !== 'number' || !isFinite(result)) {
       throw new Error('Résultat de calcul invalide');
     }
-    
+
     return result;
-  } catch (error) {
+  } catch {
     throw new Error('Erreur de calcul');
   }
 };
@@ -47,26 +53,71 @@ const hasValidParentheses = (expression: string): boolean => {
 
 // Valider la structure de l'expression
 const isValidExpression = (expression: string): boolean => {
-  // Supprimer les espaces
   const expr = expression.replace(/\s/g, '');
-  
-  // Expression vide est invalide
-  if (expr === '') return false;
-  
-  // Vérifier les opérateurs consécutifs
-  if (/[+\-*/]{2,}/.test(expr)) return false;
-  
-  // Vérifier les opérateurs au début (sauf moins pour les nombres négatifs)
-  if (/^[+*/]/.test(expr)) return false;
-  
-  // Vérifier les opérateurs à la fin
-  if (/[+\-*/]$/.test(expr)) return false;
-  
-  // Vérifier les séquences de caractères invalides
-  if (/[+\-*/]\)/.test(expr)) return false; // Opérateur avant parenthèse fermante
-  if (/\([+*/]/.test(expr)) return false; // Opérateur invalide après parenthèse ouvrante
-  
-  return true;
+
+  if (expr === '') {
+    return false;
+  }
+
+  let expectingOperand = true;
+  let decimalUsedInCurrentNumber = false;
+
+  for (let i = 0; i < expr.length; i += 1) {
+    const char = expr[i];
+
+    if (/\d/.test(char)) {
+      expectingOperand = false;
+      continue;
+    }
+
+    if (char === '.') {
+      if (decimalUsedInCurrentNumber) {
+        return false;
+      }
+
+      decimalUsedInCurrentNumber = true;
+      continue;
+    }
+
+    if (char === '(') {
+      if (!expectingOperand) {
+        return false;
+      }
+
+      expectingOperand = true;
+      decimalUsedInCurrentNumber = false;
+      continue;
+    }
+
+    if (char === ')') {
+      if (expectingOperand) {
+        return false;
+      }
+
+      expectingOperand = false;
+      decimalUsedInCurrentNumber = false;
+      continue;
+    }
+
+    if (isOperator(char)) {
+      if (expectingOperand) {
+        if (char === '-') {
+          decimalUsedInCurrentNumber = false;
+          continue;
+        }
+
+        return false;
+      }
+
+      expectingOperand = true;
+      decimalUsedInCurrentNumber = false;
+      continue;
+    }
+
+    return false;
+  }
+
+  return !expectingOperand;
 };
 
 // Formater le nombre pour l'affichage
